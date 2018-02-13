@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var chatServices = require('../server/chatService');
+var weatherService = require('../server/weatherService')
+const bodyParser = require('body-parser');
+
 
 // Creates the endpoint for our webhook
 router.post('/', (req, res) => {
@@ -21,7 +24,10 @@ router.post('/', (req, res) => {
       var sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
 
-      chatServices.sendTextMessage(webhook_event['sender']['id'], webhook_event['message']['text']);
+      weatherService.getWeatherForecast(77420).then(body => {
+        chatServices.sendTextMessage(webhook_event['sender']['id'], JSON.parse(body)['weather'][0]['main']);
+      } )
+
 
     });
 
@@ -37,7 +43,6 @@ router.post('/', (req, res) => {
 
 // Adds support for GET requests to our webhook
 router.get('/', (req, res) => {
-
   // Your verify token. Should be a random string.
   var VERIFY_TOKEN = "EAARZAKGL7UGoBAGx1u5gcFs9nNKIXl1yc3hLq5vkXjAsT34JpCsdmrWtXaGC3hnWmlN6i4YYfEXhlvFTUtZAtDhJQpYYEudFZAd7iCM23dZBEPhEktPaX4Xrnk9VHCUGsfe6VZAir2LxKCZBT804qMfcr6AEl587ZCvKji2mkhi7V1rwe2ZBARXx"
 

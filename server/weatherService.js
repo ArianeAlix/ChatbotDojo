@@ -22,15 +22,9 @@ function getGeolocalisation(cityName) {
   });
 }
 
-function getWeatherForecast(lat, lng) {
+function getWeatherForecast(zip) {
   return request({
-    uri: 'http://api.openweathermap.org/data/2.5/forecast/daily',
-    qs: {
-      APPID: WEATHER_API_TOKEN,
-      lat: lat,
-      lon: lng,
-      cnt: 10
-    },
+    uri: 'http://api.openweathermap.org/data/2.5/weather?zip=' + zip + ',fr&APPID=a47b3c0aa16e2e2da29d6665bb04a1d0',
     method: 'GET'
   });
 }

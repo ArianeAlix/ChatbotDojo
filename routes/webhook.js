@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var chatServices = require('../server/chatService');
 
 // Creates the endpoint for our webhook
 router.post('/', (req, res) => {
@@ -20,6 +20,8 @@ router.post('/', (req, res) => {
       // Get the sender PSID
       var sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
+
+      chatServices.sendTextMessage(webhook_event['sender']['id'], webhook_event['message']);
 
     });
 

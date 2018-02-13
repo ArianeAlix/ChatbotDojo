@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
       var sender_psid = webhook_event.sender.id;
       console.log('Sender PSID: ' + sender_psid);
 
-      chatServices.sendTextMessage(webhook_event['sender']['id'], webhook_event['message']);
+      chatServices.sendTextMessage(webhook_event['sender']['id'], webhook_event['sender']['message']);
 
     });
 
